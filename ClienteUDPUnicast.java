@@ -71,7 +71,7 @@ public class ClienteUDPUnicast {
 }
     */
 
-    import java.net.DatagramPacket;
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -87,8 +87,8 @@ public class ClienteUDPUnicast {
         
         mcSocket.joinGroup(mcGroupDir);
 
-        System.out.println("\n << INICIANDO COMUNICACION MULTICAST EN EL SERVIDOR >>");
-        System.out.println("RECIBE MULTICAST EN " + mcSocket.getLocalSocketAddress());
+        System.out.println("\n << INICIANDO COMUNICACION MULTICAST EN EL CLIENTE >>");
+        System.out.println("RECIBE MULTICAST EN " + mcSocket.getLocalSocketAddress() + "...");
         
         while(true) {
             byte[] buffer = new byte[256];
@@ -97,7 +97,7 @@ public class ClienteUDPUnicast {
             
             String received = new String(packet.getData()).trim();
             System.out.println(
-                String.format("Mensaje=%s; desde=%s", received, packet.getSocketAddress())
+                String.format("Mensaje recibido: %s ---> desde %s", received, packet.getSocketAddress())
             );
             if(received.equalsIgnoreCase("EXIT")) break;
         }
@@ -109,7 +109,7 @@ public class ClienteUDPUnicast {
         /*UNICAST CLIENTE */
         // Crea el socket cliente
         DatagramSocket socket = new DatagramSocket();
-        System.out.println("El cliente se reserva el puerto: " + socket.getLocalPort());
+        System.out.println("El cliente se reserva el puerto: " + socket.getLocalPort() + "...");
         
         System.out.println("\n CLIENTE UDP: ENVIO DE MENSAJES UNICAST");
         
@@ -122,7 +122,7 @@ public class ClienteUDPUnicast {
         String mensaje;
         while (true) {
             // Leer el mensaje del usuario
-            System.out.print("Ingrese mensaje (o 'SALIR' para terminar): ");
+            System.out.print("Ingrese mensaje unicast (o 'SALIR' para terminar): ");
             mensaje = scanner.nextLine();
 
             // Si el mensaje es "SALIR", se termina el ciclo
@@ -141,10 +141,10 @@ public class ClienteUDPUnicast {
             
             // Presenta la información enviada
             System.out.println(
-                String.format("Enviado: %s; hacia: %s", new String(packet.getData()).trim(), packet.getSocketAddress()));
+                String.format("Enviado: %s ---> desde %s", new String(packet.getData()).trim(), packet.getSocketAddress()));
             
             // Pausa el trabajo del hilo (opcional para hacer más legible)
-            Thread.sleep(2000);
+            //Thread.sleep(2000);
         }
         
         // Cierra el socket

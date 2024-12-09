@@ -89,7 +89,9 @@ public class ServerUDPMultUni {
         System.out.println("ENVIA MULTICAST DESDE " + udpSocket.getLocalSocketAddress());
 
         while(true) {
+            System.out.print("Ingrese mensaje multicast (o 'EXIT' para terminar): ");
             String enviar = teclado.nextLine();
+
             byte[] buffer = enviar.getBytes();
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, mcGroupDir, 9000);
             udpSocket.send(packet);
@@ -107,7 +109,7 @@ public class ServerUDPMultUni {
         
         //Crea el socket servidor
         DatagramSocket socket = new DatagramSocket(5000);
-        System.out.println("El servidor se reserva el puerto: " + socket.getLocalPort());
+        System.out.println("El servidor se reserva el puerto: " + socket.getLocalPort()+ "...");
 
         System.out.println("\n SERVIDOR UDP: RECEPCION DE MENSAJES UNICAST");
 
@@ -142,7 +144,7 @@ public class ServerUDPMultUni {
             try {
                 // Procesa el mensaje recibido
                 String carga = new String(packet.getData()).trim();
-                System.out.println(String.format("Recibido: %s; desde: %s", carga, packet.getSocketAddress()));
+                System.out.println(String.format("Recibido: %s ---> desde: %s", carga, packet.getSocketAddress()));
 
                 // Si recibe el mensaje "SALIR", termina la conexión con el cliente
                 if(carga.equals("SALIR")) {
